@@ -6,7 +6,7 @@ const HomeScreen = ({ navigation }) => {
     return (
         <View>
             <Text>Home Screen</Text>
-            <Button title="Add Contact" onPress={() => navigation.navigate('AddContact')} />
+            <Button title="New Order" onPress={() => navigation.navigate('AddContact')} />
             <Button title="Work Finished" onPress={() => navigation.navigate('WorkFinished')} />
             <Button title="Delivered" onPress={() => navigation.navigate('Delivered')} />
             <Button title="Status" onPress={() => navigation.navigate('Status')} />

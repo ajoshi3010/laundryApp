@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet, Alert, Linking, Platform } from 'react-native';
 import axios from 'axios';
+import * as IntentLauncher from 'expo-intent-launcher';
 
 const WorkFinishedScreen = () => {
   const [contacts, setContacts] = useState([]);
@@ -12,7 +13,6 @@ const WorkFinishedScreen = () => {
       const response = await axios.get('http://192.168.29.94:3000/contacts/inWork');
       if (response.data.success) {
         setContacts(response.data.inWork);
-        alert('hello')
       } else {
         alert('Failed to fetch contacts.');
       }
@@ -26,6 +26,17 @@ const WorkFinishedScreen = () => {
   useEffect(() => {
     fetchContacts();
   }, []);
+
+  const sendSMS = (phone, message) => {
+    const smsUrl = `sms:${phone}?body=${encodeURIComponent(message)}`;
+    if (Platform.OS === 'android') {
+      IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+        data: smsUrl
+      }).catch(err => console.error('Failed to open SMS app', err));
+    } else {
+      Linking.openURL(smsUrl).catch(err => console.error('Failed to open SMS app', err));
+    }
+  };
 
   const markWorkFinished = async () => {
     if (!selectedContact) {
@@ -41,7 +52,8 @@ const WorkFinishedScreen = () => {
       });
 
       if (response.data.success) {
-        alert('Marked as ready for delivery successfully!');
+        sendSMS(selectedContact.phone, 'Your clothes are ready for delivery.');
+        // alert('Marked as ready for delivery successfully!');
         // Refresh the contact list after successful operation
         fetchContacts();
         setSelectedContact(null); // Deselect contact after operation

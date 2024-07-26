@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Button, Platform } from 'react-native';
 import axios from 'axios';
+import * as IntentLauncher from 'expo-intent-launcher'; // Add this import
+
+// Add this function to send SMS
+const sendSMS = (phone, message) => {
+  const smsUrl = `sms:${phone}?body=${encodeURIComponent(message)}`;
+  if (Platform.OS === 'android') {
+    IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+      data: smsUrl
+    }).catch(err => console.error('Failed to open SMS app', err));
+  } else {
+    Linking.openURL(smsUrl).catch(err => console.error('Failed to open SMS app', err));
+  }
+};
 
 const DeliveredScreen = () => {
   const [contacts, setContacts] = useState([]);
@@ -40,7 +53,8 @@ const DeliveredScreen = () => {
       });
 
       if (response.data.success) {
-        alert('Marked as delivered successfully!');
+        sendSMS(selectedContact.phone, 'Your clothes have been delivered.');
+        // alert('Marked as delivered successfully!');
         // Refresh the contact list after successful operation
         fetchContacts();
         setSelectedContact(null); // Deselect contact after operation
