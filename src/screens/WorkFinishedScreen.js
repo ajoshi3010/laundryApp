@@ -10,7 +10,7 @@ const WorkFinishedScreen = () => {
   // Fetch contacts whose status is 'inWork'
   const fetchContacts = async () => {
     try {
-      const response = await axios.get('http://192.168.29.94:3000/contacts/inWork');
+      const response = await axios.get('https://laundary-bharath-backend-o750iks6l.vercel.app/inWork');
       if (response.data.success) {
         setContacts(response.data.inWork);
       } else {
@@ -45,7 +45,7 @@ const WorkFinishedScreen = () => {
     }
 
     try {
-      const response = await axios.post('http://192.168.29.94:3000/markReady', {
+      const response = await axios.post('https://laundary-bharath-backend-o750iks6l.vercel.app/markReady', {
         id: selectedContact.id,
         name: selectedContact.name,
         phone: selectedContact.phone

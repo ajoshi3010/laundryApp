@@ -22,7 +22,7 @@ const DeliveredScreen = () => {
   // Fetch contacts ready for delivery
   const fetchContacts = async () => {
     try {
-      const response = await axios.get('http://192.168.29.94:3000/contacts/readyForDelivery');
+      const response = await axios.get('https://laundary-bharath-backend-o750iks6l.vercel.app/contacts/readyForDelivery');
       if (response.data.success) {
         setContacts(response.data.readyForDelivery);
       } else {
@@ -46,7 +46,7 @@ const DeliveredScreen = () => {
     }
 
     try {
-      const response = await axios.post('http://192.168.29.94:3000/markDelivered', {
+      const response = await axios.post('https://laundary-bharath-backend-o750iks6l.vercel.app/markDelivered', {
         id: selectedContact.id,
         name: selectedContact.name,
         phone: selectedContact.phone

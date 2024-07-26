@@ -14,7 +14,7 @@ const AddContactScreen = ({ navigation }) => {
     const handleAddContact = async () => {
         const prefixedPhone = phone.startsWith('+91') ? phone : `+91${phone}`;
         try {
-            const response = await axios.post('http://192.168.29.94:3000/addContact', { name, phone: prefixedPhone });
+            const response = await axios.post('https://laundary-bharath-backend-o750iks6l.vercel.app/addContact', { name, phone: prefixedPhone });
             if (response.data.success) {
                 alert('Contact added successfully');
                 navigation.goBack(); // Navigate back to the home screen
