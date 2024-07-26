@@ -9,7 +9,7 @@ const AddContactScreen = () => {
 
     const handleAddContact = async () => {
         try {
-            const response = await axios.post('YOUR_FUNCTIONS_URL/addContact', { name, phone });
+            const response = await axios.post('http://192.168.29.94:3000/addContact', { name, phone });
             if (response.data.success) {
                 alert('Contact added successfully');
             } else {

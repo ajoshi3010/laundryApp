@@ -7,7 +7,7 @@ const WorkFinishedScreen = () => {
 
   const markWorkFinished = async () => {
     try {
-      const response = await axios.post('https://your-cloud-function-url/markReady', {
+      const response = await axios.post('http://192.168.29.94:3000/markReady', {
         id,
       });
 

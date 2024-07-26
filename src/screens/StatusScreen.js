@@ -12,7 +12,7 @@ const StatusScreen = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const response = await axios.get('https://your-cloud-function-url/status');
+        const response = await axios.get('http://192.168.29.94:3000/status');
         setStatusData(response.data);
       } catch (error) {
         console.error('Error fetching status:', error);
